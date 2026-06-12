@@ -1,0 +1,132 @@
+/* ============================================
+   RESET & BASE
+   ============================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #ffffff;
+  overflow: hidden;
+  height: 100vh;
+}
+
+.google-sans-flex-artistic {
+  font-family: "Google Sans Flex", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+/* ============================================
+   MAIN CONTENT (Underneath everything)
+   ============================================ */
+.main-content {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #ffffff;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Google Sans Flex", sans-serif;
+  font-size: 3rem;
+  color: #0c38f9;
+  opacity: 0;
+  animation: contentAppear 1s ease-out 9s forwards;
+}
+
+/* ============================================
+   LOADER SCREEN (Blue Background + Text)
+   ============================================ */
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #0c38f9;
+  display: flex;
+  align-items: center;
+  z-index: 100;
+  overflow: hidden;
+  animation: removeLoader 0.1s linear 9s forwards;
+}
+
+.loader-text {
+  flex-shrink: 0;
+  color: #ffffff;
+  font-size: 110vh;
+  line-height: 100vh;
+  white-space: nowrap;
+  font-weight: 600;
+  font-variation-settings: "slnt" 0, "GRAD" 0;
+  animation: scrollText 7s linear forwards;
+}
+
+/* ============================================
+   WHITE EXPLOSION
+   ============================================ */
+.white-explosion {
+  position: fixed;
+  left: 12vw;
+  top: 65vh;
+  width: 40px;
+  height: 40px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  z-index: 200;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  animation: explode 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 7s forwards;
+}
+
+/* ============================================
+   KEYFRAMES
+   ============================================ */
+@keyframes scrollText {
+  0% {
+    transform: translateX(100vw);
+  }
+  100% {
+    transform: translateX(calc(-100% + 12vw));
+  }
+}
+
+@keyframes explode {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.1);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(200);
+  }
+}
+
+@keyframes removeLoader {
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+@keyframes contentAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
