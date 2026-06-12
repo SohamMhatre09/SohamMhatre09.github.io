@@ -9,13 +9,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,slnt,wght,GRAD@6..144,-10,1..1000,0..100&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Main Content (Underneath) -->
+  <div class="theme-wrapper">
+    <!-- Main Content (Underneath) -->
   <div class="main-content">
     <h1>Welcome.</h1>
   </div>
 
-  <!-- Opening Blue Animation Screen -->
+  <!-- Opening Blue Animation Screen (base layer) -->
   <div id="loader" class="loader">
+    <h1 class="loader-text google-sans-flex-artistic">
+      THINK. CODE. CREATE.
+    </h1>
+  </div>
+
+  <!-- Inverted Color Layer (clipped to cursor circle) -->
+  <div id="loader-inverted" class="loader-inverted">
     <h1 class="loader-text google-sans-flex-artistic">
       THINK. CODE. CREATE.
     </h1>
@@ -23,6 +31,10 @@
 
   <!-- The White Explosion Bubble -->
   <div class="white-explosion"></div>
+
+  <!-- Cursor -->
+    <div class="cursor"></div>
+  </div>
 
   <script type="module" src="/src/main.js"></script>
 </body>

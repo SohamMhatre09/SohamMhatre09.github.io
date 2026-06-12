@@ -11,6 +11,7 @@ body {
   background-color: #ffffff;
   overflow: hidden;
   height: 100vh;
+  cursor: none;
 }
 
 .google-sans-flex-artistic {
@@ -41,7 +42,7 @@ body {
 }
 
 /* ============================================
-   LOADER SCREEN (Blue Background + Text)
+   LOADER SCREEN (Blue Background + White Text)
    ============================================ */
 .loader {
   position: fixed;
@@ -66,6 +67,30 @@ body {
   font-weight: 600;
   font-variation-settings: "slnt" 0, "GRAD" 0;
   animation: scrollText 7s linear forwards;
+}
+
+/* ============================================
+   INVERTED LOADER (White Background + Blue Text)
+   Clipped to cursor circle for color-swap effect
+   ============================================ */
+.loader-inverted {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  z-index: 150;
+  overflow: hidden;
+  pointer-events: none;
+  clip-path: circle(0px at -100px -100px);
+  animation: removeLoader 0.1s linear 9s forwards;
+}
+
+.loader-inverted .loader-text {
+  color: #0c38f9;
 }
 
 /* ============================================
@@ -129,4 +154,29 @@ body {
     opacity: 1;
     transform: scale(1);
   }
+}
+
+/* ============================================
+   CURSOR (ring outline only, no blend mode)
+   ============================================ */
+.cursor {
+  pointer-events: none;
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  z-index: 9999;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  background: transparent;
+  transition: border-color 0.3s ease;
+}
+
+/* After loader disappears, switch cursor ring to blue */
+.cursor.on-white {
+  border-color: rgba(12, 56, 249, 0.6);
+}
+
+.cursor.click {
+  transform: scale(0.8);
+  transition: transform 0.15s ease;
 }
