@@ -1,24 +1,289 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="scroll-behavior: smooth;">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Soham Mhatre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=Meow+Script&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
+
   body {
     background-color: #ffffff;
-    color: #0c38f9;
-    font-family: sans-serif;
-    height: 100vh;
+    font-family: 'Inter', sans-serif;
+    color: #1a1a2e;
+    cursor: none;
+    overflow-x: hidden;
+  }
+
+  /* ── Custom Cursor ── */
+  .cursor {
+    pointer-events: none;
+    position: fixed;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    z-index: 9999;
+    border: 2px solid rgba(12, 56, 249, 0.5);
+    background: transparent;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease;
+    top: -100px;
+    left: -100px;
+  }
+
+  .cursor.click {
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+
+  /* ── Navbar ── */
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 1.2rem 3rem;
+    gap: 2.5rem;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 128, 0.06);
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.4s ease;
+    pointer-events: none;
+  }
+
+  .navbar.visible {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .navbar a {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 0.95rem;
+    color: #000080;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: opacity 0.25s ease;
+  }
+
+  .navbar a:hover {
+    opacity: 0.55;
+  }
+
+  /* ── Hero Section ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 2rem 5vw 4rem;
+    gap: 4vw;
+  }
+
+  .hero-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .hero-line {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: nowrap;
+    line-height: 1.1;
+    transform: translateY(-1.5rem);
+  }
+
+  .hero-text {
+    font-family: 'Meow Script', cursive;
+    font-size: clamp(3.5rem, 7.5vw, 8.5rem);
+    color: #000080;
+    white-space: nowrap;
+  }
+
+  #svg-container {
+    display: inline-flex;
+    align-items: baseline;
+    height: clamp(5.5rem, 12vw, 14rem);
+    flex-shrink: 0;
+    transform: translateY(3rem);
+  }
+
+  .hero-svg {
+    height: 100%;
+    width: auto;
+    display: block;
+  }
+
+  /* ── Profile Image Circle ── */
+  .hero-right {
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3rem;
+  }
+
+  .profile-circle {
+    width: clamp(180px, 18vw, 320px);
+    height: clamp(180px, 18vw, 320px);
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e8ecf8 0%, #c7cfe6 100%);
+    border: 3px solid rgba(0, 0, 128, 0.12);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .profile-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Placeholder initials shown until real image is set */
+  .profile-circle .initials {
+    font-family: 'Inter', sans-serif;
+    font-weight: 200;
+    font-size: clamp(3rem, 5vw, 5rem);
+    color: rgba(0, 0, 128, 0.25);
+    user-select: none;
+  }
+
+  /* ── Content Section ── */
+  .content-section {
+    padding: 5rem 5vw 6rem;
+    max-width: 900px;
+  }
+
+  .content-section h2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 1.8rem;
+    color: #000080;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .content-section p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #444;
+    margin-bottom: 1.2rem;
   }
 </style>
 </head>
 <body>
-  Hi am Soham Mhatre
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-line">
+        <span class="hero-text">Hi I am&nbsp;</span>
+        <div id="svg-container"></div>
+        <span class="hero-text">&nbsp;!!</span>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="profile-circle">
+        <img src="/Soham.jpeg" alt="Soham Mhatre">
+      </div>
+    </div>
+  </section>
+
+  <!-- Placeholder content -->
+  <section class="content-section" id="about">
+    <h2>About</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+    <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+  </section>
+
+  <section class="content-section" id="projects">
+    <h2>Projects</h2>
+    <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.</p>
+    <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.</p>
+  </section>
+
+  <section class="content-section" id="experience">
+    <h2>Experience</h2>
+    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi.</p>
+  </section>
+
+  <section class="content-section" id="contact">
+    <h2>Contact</h2>
+    <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.</p>
+  </section>
+
+  <div class="cursor"></div>
+
+  <script>
+    // ── SVG loader ──
+    function loadSVG() {
+      const container = document.getElementById('svg-container');
+      if (container && !container.querySelector('object')) {
+        const obj = document.createElement('object');
+        obj.type = 'image/svg+xml';
+        obj.data = '/Soham.svg';
+        obj.className = 'hero-svg';
+        obj.textContent = 'Soham';
+        container.appendChild(obj);
+      }
+    }
+    window.addEventListener('message', function(e) {
+      if (e.data === 'start-svg') loadSVG();
+    });
+    setTimeout(loadSVG, 7500);
+
+    // ── Navbar slide-in on scroll ──
+    const navbar = document.querySelector('.navbar');
+    const hero = document.querySelector('.hero');
+
+    function checkNavbar() {
+      if (!navbar || !hero) return;
+      const heroBottom = hero.offsetTop + hero.offsetHeight;
+      if (window.scrollY > heroBottom - 100) {
+        navbar.classList.add('visible');
+      } else {
+        navbar.classList.remove('visible');
+      }
+    }
+
+    window.addEventListener('scroll', checkNavbar, { passive: true });
+    checkNavbar();
+    // ── Custom Cursor ──
+    const cursorEl = document.querySelector('.cursor');
+    if (cursorEl) {
+      document.addEventListener('mousemove', (e) => {
+        cursorEl.style.top = e.clientY + 'px';
+        cursorEl.style.left = e.clientX + 'px';
+      });
+      document.addEventListener('click', () => {
+        cursorEl.classList.add('click');
+        setTimeout(() => cursorEl.classList.remove('click'), 300);
+      });
+    }
+  </script>
 </body>
 </html>

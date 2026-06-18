@@ -37,8 +37,19 @@ if (cursor) {
     }, 300);
   });
 
-  // After loader disappears (9s), switch cursor ring color for white background
+  // After loader disappears (9s), enable homepage interaction
+  // Hide parent cursor — homepage iframe has its own custom cursor
   setTimeout(() => {
-    cursor.classList.add("on-white");
+    const explosion = document.querySelector('.white-explosion');
+    if (explosion) explosion.style.pointerEvents = 'auto';
+    cursor.style.display= 'none';
   }, 9000);
+
+  // Signal homepage iframe to start SVG animation when explosion reveals it
+  setTimeout(() => {
+    const frame = document.querySelector('.homepage-frame');
+    if (frame && frame.contentWindow) {
+      frame.contentWindow.postMessage('start-svg', '*');
+    }
+  }, 7500);
 }
