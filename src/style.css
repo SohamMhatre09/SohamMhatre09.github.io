@@ -30,15 +30,14 @@ body {
   width: 100vw;
   height: 100vh;
   background-color: #ffffff;
-  z-index: 1;
+  z-index: 50;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: "Google Sans Flex", sans-serif;
   font-size: 3rem;
   color: #0c38f9;
-  opacity: 0;
-  animation: contentAppear 1s ease-out 9s forwards;
+  opacity: 1;
 }
 
 /* ============================================
@@ -98,16 +97,27 @@ body {
    ============================================ */
 .white-explosion {
   position: fixed;
-  left: 12vw;
-  top: 65vh;
-  width: 40px;
-  height: 40px;
-  background-color: #ffffff;
-  border-radius: 50%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   z-index: 200;
-  transform: translate(-50%, -50%) scale(0);
-  opacity: 0;
-  animation: explode 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 7s forwards;
+  pointer-events: none;
+  clip-path: circle(0px at 12vw 65vh);
+  animation: explode 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 7s forwards;
+}
+
+.white-explosion .reveal-content {
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+}
+
+.homepage-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
 }
 
 /* ============================================
@@ -124,12 +134,10 @@ body {
 
 @keyframes explode {
   0% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(0.1);
+    clip-path: circle(0px at 12vw 65vh);
   }
   100% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(200);
+    clip-path: circle(150vmax at 12vw 65vh);
   }
 }
 

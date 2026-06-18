@@ -1,41 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio - Cinematic Opening</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,slnt,wght,GRAD@6..144,-10,1..1000,0..100&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio - Cinematic Opening</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,slnt,wght,GRAD@6..144,-10,1..1000,0..100&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="src/style.css">
 </head>
 <body>
-  <div class="theme-wrapper">
-    <!-- Main Content (Underneath) -->
-  <div class="main-content">
-    <h1>Welcome.</h1>
-  </div>
+<div class="theme-wrapper">
 
-  <!-- Opening Blue Animation Screen (base layer) -->
-  <div id="loader" class="loader">
-    <h1 class="loader-text google-sans-flex-artistic">
+<!-- Opening Blue Animation Screen (base layer) -->
+<div id="loader" class="loader">
+<h1 class="loader-text google-sans-flex-artistic">
       THINK. CODE. CREATE.
-    </h1>
-  </div>
+</h1>
+</div>
 
-  <!-- Inverted Color Layer (clipped to cursor circle) -->
-  <div id="loader-inverted" class="loader-inverted">
-    <h1 class="loader-text google-sans-flex-artistic">
+<!-- Inverted Color Layer (clipped to cursor circle) -->
+<div id="loader-inverted" class="loader-inverted">
+<h1 class="loader-text google-sans-flex-artistic">
       THINK. CODE. CREATE.
-    </h1>
+</h1>
+</div>
+
+<!-- The White Explosion Reveal Window (contains real page) -->
+<div class="white-explosion">
+  <div class="reveal-content">
+    <iframe src="homepage.html" class="homepage-frame"></iframe>
   </div>
+</div>
 
-  <!-- The White Explosion Bubble -->
-  <div class="white-explosion"></div>
+<!-- Cursor -->
+<div class="cursor"></div>
 
-  <!-- Cursor -->
-    <div class="cursor"></div>
-  </div>
-
-  <script type="module" src="/src/main.js"></script>
+</div>
+<script type="module" src="/src/main.js"></script>
 </body>
 </html>
