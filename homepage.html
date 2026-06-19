@@ -6,13 +6,13 @@
 <title>Soham Mhatre</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=Meow+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@300;400;500;600;700&family=Meow+Script&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
     background-color: #ffffff;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Cormorant Upright', serif;
     color: #1a1a2e;
     cursor: none;
     overflow-x: hidden;
@@ -40,6 +40,18 @@
     transform: translate(-50%, -50%) scale(0.8);
   }
 
+  .cursor.link-hover {
+    border: none !important;
+    background-image: url('/cursor.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 0;
+    transform: translate(0, 0);
+  }
+
   /* ── Cursor Reveal Overlay ── */
   .cursor-reveal {
     position: absolute;
@@ -62,101 +74,120 @@
     opacity: 1;
   }
 
-  /* ── Section Nav Drum ── */
-  .section-nav {
+  /* ── Game Nav Labels ── */
+  .game-nav-labels {
     position: fixed;
-    top: 20px;
+    top: 18px;
     left: 50%;
-    transform: translateX(-50%) translateY(-60px);
-    z-index: 100;
+    transform: translateX(-50%);
+    z-index: 91;
+    display: grid;
+    place-items: center;
+    width: 300px;
+    height: 72px;
     pointer-events: none;
     opacity: 0;
-    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-                opacity 0.45s ease;
+    transition: opacity 0.5s ease;
   }
 
-  .section-nav.visible {
-    transform: translateX(-50%) translateY(0);
+  .game-nav-labels.visible {
     opacity: 1;
     pointer-events: auto;
   }
 
-  .section-nav-pill {
-    background: rgba(255, 255, 255, 0.35);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border-radius: 24px;
-    padding: 6px 28px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow: hidden;
-    height: 72px;
-    position: relative;
-  }
-
-  /* Fade masks at top and bottom of pill */
-  .section-nav-pill::before,
-  .section-nav-pill::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 16px;
-    z-index: 2;
-    pointer-events: none;
-  }
-  .section-nav-pill::before {
-    top: 0;
-    background: linear-gradient(to bottom, rgba(255,255,255,0.55), transparent);
-  }
-  .section-nav-pill::after {
-    bottom: 0;
-    background: linear-gradient(to top, rgba(255,255,255,0.55), transparent);
-  }
-
-  .section-nav-track {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .section-nav-item {
-    font-family: 'Inter', sans-serif;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    text-align: center;
-    white-space: nowrap;
-    line-height: 24px;
-    height: 24px;
-    transition: font-size 0.4s ease, color 0.4s ease, opacity 0.4s ease;
-    user-select: none;
-  }
-
-  .section-nav-item.prev,
-  .section-nav-item.next {
-    font-size: 0.6rem;
-    font-weight: 300;
-    color: rgba(0, 0, 128, 0.3);
-    opacity: 0.7;
-  }
-
-  .section-nav-item.current {
+  .game-nav-link {
+    grid-area: 1 / 1;
+    font-family: 'Cormorant Upright', serif;
     font-size: 0.85rem;
-    font-weight: 400;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
     color: #000080;
-    opacity: 1;
+    text-decoration: none;
+    cursor: none;
+    opacity: 0;
+    /* Start on the right */
+    transform: translateX(120px);
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                text-shadow 0.3s ease;
+    white-space: nowrap;
+    position: relative;
+    padding: 10px 14px;
   }
+
+  .game-nav-link.active {
+    opacity: 1;
+    transform: translateX(0); /* Center */
+    text-shadow: 0 0 12px rgba(0, 0, 128, 0.3);
+  }
+
+  .game-nav-link.past {
+    opacity: 0;
+    transform: translateX(-120px); /* Exit to left */
+  }
+
 
   /* ── Hero Section ── */
   .hero {
     min-height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 2rem 5vw 4rem;
+    gap: 4rem;
+  }
+
+  .hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 2rem;
+  }
+
+  .hero-social {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+    opacity: 0;
+    animation: fadeIn 1s ease 1s forwards;
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  .social-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .social-links a, .mail-link {
+    font-family: 'Cormorant Upright', serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: #000080;
+    text-decoration: none;
+    position: relative;
+    cursor: none;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .social-links a:hover, .mail-link:hover {
+    color: #000040;
+    text-shadow: 0 0 8px rgba(0, 0, 128, 0.2);
+  }
+
+  .mail-link {
+    font-weight: 600;
+    font-size: 1.1rem;
   }
 
   .hero-left {
@@ -225,8 +256,8 @@
 
   /* Placeholder initials shown until real image is set */
   .profile-circle .initials {
-    font-family: 'Inter', sans-serif;
-    font-weight: 200;
+    font-family: 'Cormorant Upright', serif;
+    font-weight: 400;
     font-size: clamp(3rem, 5vw, 5rem);
     color: rgba(0, 0, 128, 0.25);
     user-select: none;
@@ -239,8 +270,8 @@
   }
 
   .content-section h2 {
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
+    font-family: 'Cormorant Upright', serif;
+    font-weight: 600;
     font-size: 1.8rem;
     color: #000080;
     margin-bottom: 1.5rem;
@@ -248,8 +279,8 @@
   }
 
   .content-section p {
-    font-family: 'Inter', sans-serif;
-    font-weight: 300;
+    font-family: 'Cormorant Upright', serif;
+    font-weight: 500;
     font-size: 1.05rem;
     line-height: 1.8;
     color: #444;
@@ -271,14 +302,8 @@
     box-shadow: 0 0 18px 4px rgba(0, 0, 128, 0.10),
                 0 0 40px 8px rgba(0, 0, 128, 0.06),
                 0 2px 8px rgba(0, 0, 128, 0.08);
-    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: opacity 0.5s ease, width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
     opacity: 1;
-    pointer-events: none;
-  }
-
-  .dino-capsule.hidden {
-    opacity: 0;
-    transform: translateX(-50%) translateY(-30px);
     pointer-events: none;
   }
 
@@ -295,27 +320,45 @@
     <canvas id="dino-canvas" width="520" height="60"></canvas>
   </div>
 
-  <!-- Section Nav Drum -->
-  <div class="section-nav" id="section-nav">
-    <div class="section-nav-pill">
-      <div class="section-nav-track" id="section-nav-track"></div>
-    </div>
-  </div>
+  <!-- Game Nav Labels -->
+  <div class="game-nav-labels" id="game-nav-labels"></div>
 
   <!-- Hero -->
   <section class="hero">
-    <div class="hero-left">
-      <div class="hero-line">
-        <span class="hero-text">Hi I am&nbsp;</span>
-        <div id="svg-container"></div>
-        <span class="hero-text">&nbsp;!</span>
+    <div class="hero-content">
+      <div class="hero-left">
+        <div class="hero-line">
+          <span class="hero-text">Hi I am&nbsp;</span>
+          <div id="svg-container"></div>
+          <span class="hero-text">&nbsp;!</span>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="profile-circle" id="profile-circle">
+          <img src="/Soham.jpeg" alt="Soham Mhatre">
+          <div class="cursor-reveal" id="cursor-reveal"></div>
+        </div>
       </div>
     </div>
-    <div class="hero-right">
-      <div class="profile-circle" id="profile-circle">
-        <img src="/Soham.jpeg" alt="Soham Mhatre">
-        <div class="cursor-reveal" id="cursor-reveal"></div>
+    <div class="hero-social">
+      <div class="social-links">
+        <a href="https://github.com/SohamMhatre09" target="_blank">
+          <img src="/icons8-github-64.png" alt="Github" width="20" height="20">
+          /SohamMhatre09
+        </a>
+        <a href="https://linkedin.com/in/mhatresoham" target="_blank">
+          <img src="/icons8-linkedin-50.png" alt="LinkedIn" width="20" height="20">
+          /mhatresoham
+        </a>
+        <a href="https://instagram.com/infinite_dreamer_09" target="_blank">
+          <img src="/icons8-instagram-48.png" alt="Instagram" width="20" height="20">
+          /Infinite_dreamer_09
+        </a>
       </div>
+      <a href="mailto:ichbinsoham@gmail.com" class="mail-link">
+        <img src="/icons8-gmail-48.png" alt="Mail" width="20" height="20">
+        ichbinsoham@gmail.com
+      </a>
     </div>
   </section>
 
@@ -655,20 +698,49 @@
         loop();
       }, 600);
 
-      // Show/hide capsule based on scroll
-      const dinoCapsule = document.getElementById('dino-capsule');
-      const heroEl = document.querySelector('.hero');
-      function toggleDinoCapsule() {
-        if (!dinoCapsule || !heroEl) return;
-        const heroBot = heroEl.offsetTop + heroEl.offsetHeight;
-        if (window.scrollY > heroBot - 200) {
-          dinoCapsule.classList.add('hidden');
-        } else {
-          dinoCapsule.classList.remove('hidden');
+      // ── Expose game state for scroll-driven nav ──
+      window._dinoGame = {
+        setIdle(idle) {
+          this._idle = idle;
+        },
+        get idle() { return this._idle || false; },
+        _idle: false,
+        // Expose internals for nav mode
+        _speed: speed,
+        setSpeed(s) { speed = s; this._speed = s; },
+        getFrame() { return frame; }
+      };
+
+      // Override update to respect idle state
+      const _origUpdate = update;
+      update = function() {
+        if (window._dinoGame.idle) {
+          // Only draw standing dino, no physics
+          return;
         }
-      }
-      window.addEventListener('scroll', toggleDinoCapsule, { passive: true });
-      toggleDinoCapsule();
+        _origUpdate();
+      };
+
+      // Override draw to show standing dino when idle
+      const _origDraw = draw;
+      draw = function() {
+        if (window._dinoGame.idle) {
+          ctx.clearRect(0, 0, W, H);
+          // Clouds still
+          clouds.forEach(drawCloud);
+          // Ground
+          ctx.fillStyle = COL;
+          ctx.fillRect(0, GROUND_Y, W, 1);
+          ctx.fillStyle = 'rgba(0, 0, 128, 0.25)';
+          groundBumps.forEach(b => {
+            ctx.fillRect(b.x, GROUND_Y + 1, b.w, b.h);
+          });
+          // Standing dino
+          drawSprite(dinoStand, DINO_X, GROUND_Y - DINO_DRAW_H);
+          return;
+        }
+        _origDraw();
+      };
     })();
 
     // ── SVG loader ──
@@ -688,68 +760,78 @@
     });
     setTimeout(loadSVG, 7500);
 
-    // ── Section Nav Drum ──
-    const sectionNav = document.getElementById('section-nav');
-    const navTrack = document.getElementById('section-nav-track');
+    // ── Game Nav: Section labels fly in from right when scrolled past hero ──
+    const gameNavContainer = document.getElementById('game-nav-labels');
     const hero = document.querySelector('.hero');
     const sections = Array.from(document.querySelectorAll('.content-section'));
     const sectionNames = sections.map(s => s.querySelector('h2')?.textContent || s.id);
     let currentIdx = -1;
+    let navActive = false;
 
-    // Build all nav items once
-    const ITEM_HEIGHT = 24; // matches CSS line-height/height
-    sectionNames.forEach((name) => {
-      const el = document.createElement('span');
-      el.className = 'section-nav-item';
-      el.textContent = name;
-      navTrack.appendChild(el);
+    // Build nav links for one-at-a-time display
+    sectionNames.forEach((name, i) => {
+      const link = document.createElement('a');
+      link.className = 'game-nav-link';
+      link.textContent = name;
+      link.href = '#' + sections[i].id;
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        sections[i].scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      gameNavContainer.appendChild(link);
     });
-    const navItems = navTrack.querySelectorAll('.section-nav-item');
+    const navLinks = gameNavContainer.querySelectorAll('.game-nav-link');
 
-    function updateSectionNav() {
-      if (!sectionNav || !hero || !navTrack) return;
+    function updateGameNav() {
+      if (!hero || !gameNavContainer) return;
 
       const heroBottom = hero.offsetTop + hero.offsetHeight;
       const scrollY = window.scrollY;
 
-      // Show/hide
-      if (scrollY > heroBottom - 100) {
-        sectionNav.classList.add('visible');
+      if (scrollY > heroBottom - 200) {
+        // Activate nav mode
+        if (!navActive) {
+          navActive = true;
+          gameNavContainer.classList.add('visible');
+          if (window._dinoGame) window._dinoGame.setIdle(true);
+        }
+
+        // Find active section
+        let activeIdx = 0;
+        const viewMid = scrollY + window.innerHeight * 0.4;
+        sections.forEach((sec, i) => {
+          const top = sec.offsetTop;
+          const bottom = top + sec.offsetHeight;
+          if (viewMid >= top && viewMid < bottom) activeIdx = i;
+        });
+
+        if (activeIdx !== currentIdx) {
+          currentIdx = activeIdx;
+          navLinks.forEach((link, i) => {
+            link.classList.remove('active', 'past');
+            if (i < activeIdx) {
+              link.classList.add('past');
+            } else if (i === activeIdx) {
+              link.classList.add('active');
+            }
+          });
+        }
       } else {
-        sectionNav.classList.remove('visible');
-        currentIdx = -1;
-        return;
+        // Back in hero — resume game
+        if (navActive) {
+          navActive = false;
+          gameNavContainer.classList.remove('visible');
+          if (window._dinoGame) window._dinoGame.setIdle(false);
+          navLinks.forEach(link => {
+            link.classList.remove('active', 'past');
+          });
+          currentIdx = -1;
+        }
       }
-
-      // Find active section
-      let activeIdx = 0;
-      const viewMid = scrollY + window.innerHeight * 0.4;
-      sections.forEach((sec, i) => {
-        const top = sec.offsetTop;
-        const bottom = top + sec.offsetHeight;
-        if (viewMid >= top && viewMid < bottom) activeIdx = i;
-      });
-
-      if (activeIdx === currentIdx) return;
-      currentIdx = activeIdx;
-
-      // Slide the track so current item is centred in the 72px pill
-      // Centre of pill = 36px, centre of item = activeIdx * 24 + 12
-      const offset = 36 - (activeIdx * ITEM_HEIGHT + ITEM_HEIGHT / 2);
-      navTrack.style.transform = `translateY(${offset}px)`;
-
-      // Update classes
-      navItems.forEach((item, i) => {
-        item.classList.remove('prev', 'current', 'next');
-        if (i === activeIdx) item.classList.add('current');
-        else if (i === activeIdx - 1) item.classList.add('prev');
-        else if (i === activeIdx + 1) item.classList.add('next');
-        else item.classList.add('prev'); // far items same as prev style
-      });
     }
 
-    window.addEventListener('scroll', updateSectionNav, { passive: true });
-    updateSectionNav();
+    window.addEventListener('scroll', updateGameNav, { passive: true });
+    updateGameNav();
     // ── Custom Cursor ──
     const cursorEl = document.querySelector('.cursor');
     const profileCircle = document.getElementById('profile-circle');
@@ -765,6 +847,13 @@
       document.addEventListener('mousemove', (e) => {
         cursorEl.style.top = e.clientY + 'px';
         cursorEl.style.left = e.clientX + 'px';
+
+        const isLink = e.target.closest('a, .hero-social, .game-nav-labels') !== null;
+        if (isLink) {
+          cursorEl.classList.add('link-hover');
+        } else {
+          cursorEl.classList.remove('link-hover');
+        }
 
         // ── Art.jpeg reveal inside cursor when over profile photo ──
         if (profileCircle && cursorReveal) {
