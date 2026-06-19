@@ -302,6 +302,7 @@
       heroH = hero.offsetHeight;
       vh = window.innerHeight;
       updateStackCards();
+      if (typeof updateJourneyLayout === 'function') updateJourneyLayout();
     });
 
     function updateStackCards() {
@@ -343,6 +344,18 @@
     const journeySection = document.getElementById('journey-section');
     const journeyTrack = document.getElementById('journey-track');
 
+    function updateJourneyLayout() {
+      if (!journeySection || !journeyTrack) return;
+      const stops = journeyTrack.querySelectorAll('.journey-stop');
+      if (stops.length < 2) return;
+      const maxScroll = stops[stops.length - 1].offsetLeft - stops[0].offsetLeft;
+      if (maxScroll > 0) {
+        journeySection.style.height = `${maxScroll + window.innerHeight}px`;
+      } else {
+        journeySection.style.height = '100vh';
+      }
+    }
+
     function updateJourneyScroll() {
       if (!journeySection || !journeyTrack) return;
       const secTop = journeySection.offsetTop;
@@ -354,7 +367,10 @@
         let progress = (scrollY - secTop) / (secH - window.innerHeight);
         progress = Math.max(0, Math.min(1, progress));
 
-        const maxScroll = journeyTrack.scrollWidth - window.innerWidth;
+        const stops = journeyTrack.querySelectorAll('.journey-stop');
+        if (stops.length < 2) return;
+        const maxScroll = stops[stops.length - 1].offsetLeft - stops[0].offsetLeft;
+        
         if (maxScroll > 0) {
           const tx = progress * maxScroll;
           journeyTrack.style.transform = `translate3d(-${tx}px, 0, 0)`;
@@ -373,6 +389,7 @@
       }
     }, { passive: true });
     updateStackCards();
+    updateJourneyLayout();
     updateJourneyScroll();
 
     // ── Game Nav (hidden — cards have their own labels) ──

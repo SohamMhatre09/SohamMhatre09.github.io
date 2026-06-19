@@ -227,6 +227,7 @@
   .hero-svg {
     height: 100%;
     width: auto;
+    aspect-ratio: 16 / 9;
     display: block;
     pointer-events: none;
   }
@@ -503,7 +504,8 @@
   /* ── Journey Section ── */
   #journey-section {
     position: relative;
-    height: 400vh; /* scroll distance */
+    /* Height is now dynamically set via JS to match horizontal scroll exactly */
+    min-height: 100vh; 
     /* Mix seamlessly from white-gray down into the footer's blue sky over the final 100vh of scroll */
     background: linear-gradient(180deg, #fafafa 0%, #fafafa 75%, #60a5fa 100%);
   }
@@ -609,7 +611,7 @@
 
   .journey-card {
     background: #ffffff;
-    border-radius: 16px;
+    border-radius: 32px;
     padding: 32px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.04);
     border: 1px solid rgba(0,0,0,0.03);
@@ -629,7 +631,7 @@
   .jc-logo {
     width: 48px;
     height: 48px;
-    border-radius: 8px;
+    border-radius: 16px;
     background: linear-gradient(135deg, #f8fafc, #f1f5f9);
     border: 1px solid #e2e8f0;
     display: flex;
@@ -686,6 +688,7 @@
   }
 
   @media (max-width: 768px) {
+    #journey-track { padding: 0 calc(50vw - 160px); }
     .journey-stop, .timeline-node::before { width: 320px; }
     .journey-card { width: 280px; }
   }
