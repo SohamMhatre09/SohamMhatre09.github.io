@@ -14,42 +14,48 @@
     background-color: #ffffff;
     font-family: 'Cormorant Upright', serif;
     color: #1a1a2e;
-    cursor: none;
     overflow-x: hidden;
   }
 
-  /* ── Custom Cursor ── */
-  .cursor {
-    pointer-events: none;
-    position: fixed;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    z-index: 9999;
-    border: 2px solid rgba(12, 56, 249, 0.5);
-    background: transparent;
-    transform: translate(-50%, -50%);
-    transition: transform 0.15s ease,
-                width 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-                height 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-    top: -100px;
-    left: -100px;
+  /* ── Custom Cursor (desktop only) ── */
+  @media (hover: hover) and (pointer: fine) {
+    body { cursor: none; }
+    .cursor {
+      pointer-events: none;
+      position: fixed;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      z-index: 9999;
+      border: 2px solid rgba(12, 56, 249, 0.5);
+      background: transparent;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease,
+                  width 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+                  height 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      top: -100px;
+      left: -100px;
+      display: block;
+    }
+    .cursor.click {
+      transform: translate(-50%, -50%) scale(0.8);
+    }
+    .cursor.link-hover {
+      border: none !important;
+      background-image: url('/cursor.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 32px !important;
+      height: 32px !important;
+      border-radius: 0;
+      transform: translate(0, 0);
+    }
+    a, button { cursor: none; }
   }
 
-  .cursor.click {
-    transform: translate(-50%, -50%) scale(0.8);
-  }
-
-  .cursor.link-hover {
-    border: none !important;
-    background-image: url('/cursor.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 32px !important;
-    height: 32px !important;
-    border-radius: 0;
-    transform: translate(0, 0);
+  @media (hover: none), (pointer: coarse) {
+    .cursor { display: none !important; }
   }
 
   /* ── Cursor Reveal Overlay ── */
@@ -70,24 +76,56 @@
     transition: opacity 0.2s ease;
   }
 
-  .profile-circle:hover .cursor-reveal {
+  /* ── Dino Game Capsule ── */
+  .dino-capsule {
+    position: fixed;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 90;
+    background: rgba(224, 230, 255, 0.35);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    border: 1.5px solid rgba(0, 0, 128, 0.18);
+    border-radius: 40px;
+    padding: 5px 10px;
+    box-shadow: 0 0 18px 4px rgba(0, 0, 128, 0.10),
+                0 0 40px 8px rgba(0, 0, 128, 0.06),
+                0 2px 8px rgba(0, 0, 128, 0.08);
+    transition: opacity 0.5s ease;
     opacity: 1;
+    pointer-events: none;
+    max-width: calc(100vw - 28px);
+  }
+
+  .dino-capsule canvas {
+    display: block;
+    border-radius: 32px;
+    max-width: 100%;
   }
 
   /* ── Game Nav Labels ── */
   .game-nav-labels {
     position: fixed;
-    top: 18px;
+    top: 14px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 91;
     display: grid;
     place-items: center;
-    width: 300px;
-    height: 72px;
+    width: 260px;
+    height: 60px;
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.5s ease;
+  }
+
+  @media (max-width: 480px) {
+    .game-nav-labels {
+      width: 220px;
+      height: 52px;
+      top: 10px;
+    }
   }
 
   .game-nav-labels.visible {
@@ -98,15 +136,13 @@
   .game-nav-link {
     grid-area: 1 / 1;
     font-family: 'Cormorant Upright', serif;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: #000080;
     text-decoration: none;
-    cursor: none;
     opacity: 0;
-    /* Start on the right */
     transform: translateX(120px);
     transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
                 transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
@@ -114,19 +150,21 @@
     white-space: nowrap;
     position: relative;
     padding: 10px 14px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
   }
 
   .game-nav-link.active {
     opacity: 1;
-    transform: translateX(0); /* Center */
+    transform: translateX(0);
     text-shadow: 0 0 12px rgba(0, 0, 128, 0.3);
   }
 
   .game-nav-link.past {
     opacity: 0;
-    transform: translateX(-120px); /* Exit to left */
+    transform: translateX(-120px);
   }
-
 
   /* ── Hero Section ── */
   .hero {
@@ -135,8 +173,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 2rem 5vw 4rem;
-    gap: 4rem;
+    padding: 5rem 5vw 4rem;
+    gap: 3rem;
   }
 
   .hero-content {
@@ -144,50 +182,17 @@
     align-items: center;
     justify-content: center;
     gap: 2rem;
+    flex-wrap: wrap;
   }
 
-  .hero-social {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.2rem;
-    opacity: 0;
-    animation: fadeIn 1s ease 1s forwards;
-  }
-
-  @keyframes fadeIn {
-    to { opacity: 1; }
-  }
-
-  .social-links {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-  }
-
-  .social-links a, .mail-link {
-    font-family: 'Cormorant Upright', serif;
-    font-size: 1.1rem;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    color: #000080;
-    text-decoration: none;
-    position: relative;
-    cursor: none;
-    transition: color 0.3s ease, text-shadow 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-  }
-
-  .social-links a:hover, .mail-link:hover {
-    color: #000040;
-    text-shadow: 0 0 8px rgba(0, 0, 128, 0.2);
-  }
-
-  .mail-link {
-    font-weight: 600;
-    font-size: 1.1rem;
+  /* On mobile: stack vertically, photo first */
+  @media (max-width: 640px) {
+    .hero-content {
+      flex-direction: column-reverse;
+      gap: 1.5rem;
+      text-align: center;
+    }
+    .hero { gap: 2rem; padding: 5rem 6vw 3rem; }
   }
 
   .hero-left {
@@ -201,12 +206,21 @@
     align-items: baseline;
     flex-wrap: nowrap;
     line-height: 1.1;
-    transform: translateY(-1.5rem);
+    transform: translateY(clamp(-0.6rem, -1.5vw, -0.3rem));
+  }
+
+  @media (max-width: 640px) {
+    .hero-line {
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0;
+      transform: none;
+    }
   }
 
   .hero-text {
     font-family: 'Meow Script', cursive;
-    font-size: clamp(3.5rem, 7.5vw, 8.5rem);
+    font-size: clamp(2.6rem, 8vw, 8.5rem);
     color: #000080;
     white-space: nowrap;
   }
@@ -214,9 +228,9 @@
   #svg-container {
     display: inline-flex;
     align-items: baseline;
-    height: clamp(5.5rem, 12vw, 14rem);
+    height: clamp(4rem, 11vw, 14rem);
     flex-shrink: 0;
-    transform: translateY(3rem);
+    transform: translateY(clamp(1.2rem, 3.5vw, 3rem));
     pointer-events: none;
   }
 
@@ -236,8 +250,8 @@
   }
 
   .profile-circle {
-    width: clamp(180px, 18vw, 320px);
-    height: clamp(180px, 18vw, 320px);
+    width: clamp(140px, 38vw, 320px);
+    height: clamp(140px, 38vw, 320px);
     border-radius: 50%;
     background: linear-gradient(135deg, #e8ecf8 0%, #c7cfe6 100%);
     border: 3px solid rgba(0, 0, 128, 0.12);
@@ -248,13 +262,19 @@
     position: relative;
   }
 
+  @media (max-width: 640px) {
+    .profile-circle {
+      width: clamp(130px, 52vw, 200px);
+      height: clamp(130px, 52vw, 200px);
+    }
+  }
+
   .profile-circle img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
 
-  /* Placeholder initials shown until real image is set */
   .profile-circle .initials {
     font-family: 'Cormorant Upright', serif;
     font-weight: 400;
@@ -263,53 +283,97 @@
     user-select: none;
   }
 
+  /* ── Social Links ── */
+  .hero-social {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0;
+    animation: fadeIn 1s ease 1s forwards;
+    width: 100%;
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  .social-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 480px) {
+    .social-links {
+      gap: 0.8rem;
+    }
+  }
+
+  .social-links a, .mail-link {
+    font-family: 'Cormorant Upright', serif;
+    font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: #000080;
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 6px 4px;
+    min-height: 44px;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .social-links a, .mail-link { cursor: none; }
+    .social-links a:hover, .mail-link:hover {
+      color: #000040;
+      text-shadow: 0 0 8px rgba(0, 0, 128, 0.2);
+    }
+  }
+
+  .mail-link {
+    font-weight: 600;
+  }
+
+  /* Hide text on very small screens, show only icon */
+  @media (max-width: 380px) {
+    .social-link-text { display: none; }
+    .social-links a { gap: 0; }
+  }
+
   /* ── Content Section ── */
   .content-section {
-    padding: 5rem 5vw 6rem;
+    padding: 4rem 5vw 5rem;
     max-width: 900px;
+  }
+
+  @media (max-width: 640px) {
+    .content-section {
+      padding: 3rem 6vw 4rem;
+    }
   }
 
   .content-section h2 {
     font-family: 'Cormorant Upright', serif;
     font-weight: 600;
-    font-size: 1.8rem;
+    font-size: clamp(1.4rem, 5vw, 1.8rem);
     color: #000080;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
     letter-spacing: -0.01em;
   }
 
   .content-section p {
     font-family: 'Cormorant Upright', serif;
     font-weight: 500;
-    font-size: 1.05rem;
+    font-size: clamp(0.95rem, 3.5vw, 1.05rem);
     line-height: 1.8;
     color: #444;
     margin-bottom: 1.2rem;
-  }
-  /* ── Dino Game Capsule ── */
-  .dino-capsule {
-    position: fixed;
-    top: 18px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 90;
-    background: rgba(224, 230, 255, 0.35);
-    backdrop-filter: blur(22px);
-    -webkit-backdrop-filter: blur(22px);
-    border: 1.5px solid rgba(0, 0, 128, 0.18);
-    border-radius: 40px;
-    padding: 6px 12px;
-    box-shadow: 0 0 18px 4px rgba(0, 0, 128, 0.10),
-                0 0 40px 8px rgba(0, 0, 128, 0.06),
-                0 2px 8px rgba(0, 0, 128, 0.08);
-    transition: opacity 0.5s ease, width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-    opacity: 1;
-    pointer-events: none;
-  }
-
-  .dino-capsule canvas {
-    display: block;
-    border-radius: 32px;
   }
 </style>
 </head>
@@ -344,15 +408,15 @@
       <div class="social-links">
         <a href="https://github.com/SohamMhatre09" target="_blank">
           <img src="/icons8-github-64.png" alt="Github" width="20" height="20">
-          /SohamMhatre09
+          <span class="social-link-text">/SohamMhatre09</span>
         </a>
         <a href="https://linkedin.com/in/mhatresoham" target="_blank">
           <img src="/icons8-linkedin-50.png" alt="LinkedIn" width="20" height="20">
-          /mhatresoham
+          <span class="social-link-text">/mhatresoham</span>
         </a>
         <a href="https://instagram.com/infinite_dreamer_09" target="_blank">
           <img src="/icons8-instagram-48.png" alt="Instagram" width="20" height="20">
-          /Infinite_dreamer_09
+          <span class="social-link-text">/Infinite_dreamer_09</span>
         </a>
       </div>
       <a href="mailto:ichbinsoham@gmail.com" class="mail-link">
@@ -362,7 +426,7 @@
     </div>
   </section>
 
-  <!-- Placeholder content -->
+  <!-- Content sections -->
   <section class="content-section" id="about">
     <h2>About</h2>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
@@ -388,19 +452,26 @@
   <div class="cursor"></div>
 
   <script>
-    // ── Dino Game (Chrome T-Rex faithful recreation) ──
+    // ── Detect touch/mobile ──
+    const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+    // ── Dino Game Canvas: scale down on small screens ──
     (function() {
+      const capsule = document.getElementById('dino-capsule');
       const canvas = document.getElementById('dino-canvas');
+      const maxW = Math.min(520, window.innerWidth - 28);
+      const scale = maxW / 520;
+      canvas.width = maxW;
+      canvas.height = Math.round(60 * scale);
+
       const ctx = canvas.getContext('2d');
       const W = canvas.width;
       const H = canvas.height;
-      const P = 2;                       // pixel scale
-      const GROUND_Y = H - 8;
-      const DINO_X = 36;
-      const COL = '#000080';             // landing page navy blue
+      const P = Math.max(1, Math.round(2 * scale));
+      const GROUND_Y = H - Math.round(8 * scale);
+      const DINO_X = Math.round(36 * scale);
+      const COL = '#000080';
 
-      // ── T-Rex sprite bitmaps (each row = 1 pixel row, 1 = filled) ──
-      // 20 cols × 22 rows — classic side-view T-Rex
       const dinoStand = [
         '00000000001111110000',
         '00000000011111111100',
@@ -470,36 +541,32 @@
 
       const DINO_SPRITE_W = 20;
       const DINO_SPRITE_H = 20;
-      const DINO_DRAW_W = DINO_SPRITE_W * P;   // 40
-      const DINO_DRAW_H = DINO_SPRITE_H * P;   // 40
+      const DINO_DRAW_W = DINO_SPRITE_W * P;
+      const DINO_DRAW_H = DINO_SPRITE_H * P;
 
-      // State
       let dinoY = GROUND_Y - DINO_DRAW_H;
       let velY = 0;
       let jumping = false;
-      const GRAVITY = 0.28;
-      const JUMP_VEL = -5.0;
-      let speed = 1.6;
+      const GRAVITY = 0.28 * scale;
+      const JUMP_VEL = -5.0 * Math.sqrt(scale);
+      let speed = 1.6 * Math.sqrt(scale);
       let frame = 0;
 
-      // ── Ground bumps (mimics original uneven ground) ──
       let groundBumps = [];
       for (let i = 0; i < 80; i++) {
         groundBumps.push({
           x: Math.random() * W,
-          w: 1 + Math.random() * 3,
-          h: 1 + Math.random() * 1.5
+          w: Math.max(1, Math.round((1 + Math.random() * 3) * scale)),
+          h: Math.max(1, Math.round((1 + Math.random() * 1.5) * scale))
         });
       }
 
-      // ── Cacti ──
       let cacti = [];
       let cactusTimer = 0;
-      const CACTUS_MIN_GAP = 180;
-      const CACTUS_MAX_GAP = 320;
-      let nextCactus = 240;
+      const CACTUS_MIN_GAP = 180 * scale;
+      const CACTUS_MAX_GAP = 320 * scale;
+      let nextCactus = 240 * scale;
 
-      // ── Clouds ──
       let clouds = [];
       for (let i = 0; i < 3; i++) {
         clouds.push({
@@ -508,25 +575,14 @@
         });
       }
 
-      // ── Cactus types: small & large (original shapes) ──
       function spawnCactus() {
         const type = Math.random();
-        if (type < 0.35) {
-          // Small single cactus
-          cacti.push({ x: W + 10, type: 'small', count: 1 });
-        } else if (type < 0.6) {
-          // Small pair
-          cacti.push({ x: W + 10, type: 'small', count: 2 });
-        } else if (type < 0.85) {
-          // Large single
-          cacti.push({ x: W + 10, type: 'large', count: 1 });
-        } else {
-          // Large pair
-          cacti.push({ x: W + 10, type: 'large', count: 2 });
-        }
+        if (type < 0.35) cacti.push({ x: W + 10, type: 'small', count: 1 });
+        else if (type < 0.6) cacti.push({ x: W + 10, type: 'small', count: 2 });
+        else if (type < 0.85) cacti.push({ x: W + 10, type: 'large', count: 1 });
+        else cacti.push({ x: W + 10, type: 'large', count: 2 });
       }
 
-      // ── Draw helpers ──
       function drawSprite(sprite, x, y) {
         ctx.fillStyle = COL;
         for (let row = 0; row < sprite.length; row++) {
@@ -539,38 +595,29 @@
       }
 
       function drawSmallCactus(x) {
-        // Single small cactus ~6px wide × 14px tall (scaled by P)
         const w = 3 * P, h = 14 * P;
         const bx = x, by = GROUND_Y - h;
         ctx.fillStyle = COL;
-        // Trunk
         ctx.fillRect(bx, by + 3*P, w, h - 3*P);
-        // Top nub
         ctx.fillRect(bx + 0.5*P, by, w - 1*P, 4*P);
-        // Left arm
         ctx.fillRect(bx - 2*P, by + 4*P, 2*P, 1*P);
         ctx.fillRect(bx - 2*P, by + 4*P, 1*P, 3*P);
         ctx.fillRect(bx - 2*P, by + 7*P, 2*P, 1*P);
-        // Right arm
         ctx.fillRect(bx + w, by + 6*P, 2*P, 1*P);
         ctx.fillRect(bx + w + 1*P, by + 6*P, 1*P, 3*P);
         ctx.fillRect(bx + w, by + 8*P, 2*P, 1*P);
-        return 3 * P + 4 * P; // hitbox width
+        return 3 * P + 4 * P;
       }
 
       function drawLargeCactus(x) {
         const w = 4 * P, h = 18 * P;
         const bx = x, by = GROUND_Y - h;
         ctx.fillStyle = COL;
-        // Trunk
         ctx.fillRect(bx, by + 3*P, w, h - 3*P);
-        // Top
         ctx.fillRect(bx + 0.5*P, by, w - 1*P, 4*P);
-        // Left arm
         ctx.fillRect(bx - 3*P, by + 5*P, 3*P, 1*P);
         ctx.fillRect(bx - 3*P, by + 5*P, 1*P, 4*P);
         ctx.fillRect(bx - 3*P, by + 9*P, 3*P, 1*P);
-        // Right arm
         ctx.fillRect(bx + w, by + 8*P, 3*P, 1*P);
         ctx.fillRect(bx + w + 2*P, by + 8*P, 1*P, 4*P);
         ctx.fillRect(bx + w, by + 11*P, 3*P, 1*P);
@@ -581,30 +628,23 @@
         let totalW = 0;
         for (let i = 0; i < c.count; i++) {
           const offset = i * (c.type === 'small' ? 8 * P : 10 * P);
-          if (c.type === 'small') {
-            totalW = offset + drawSmallCactus(c.x + offset);
-          } else {
-            totalW = offset + drawLargeCactus(c.x + offset);
-          }
+          if (c.type === 'small') totalW = offset + drawSmallCactus(c.x + offset);
+          else totalW = offset + drawLargeCactus(c.x + offset);
         }
-        c._hitW = totalW; // store for collision
+        c._hitW = totalW;
       }
 
       function drawCloud(cl) {
         ctx.fillStyle = 'rgba(0, 0, 128, 0.10)';
-        // Classic chrome cloud shape: flat bottom, bumpy top
-        const s = 1.2;
+        const s = 1.2 * scale;
         ctx.fillRect(cl.x, cl.y + 3*s, 24*s, 2*s);
         ctx.fillRect(cl.x + 2*s, cl.y + 2*s, 20*s, 1*s);
         ctx.fillRect(cl.x + 4*s, cl.y + 1*s, 6*s, 1*s);
         ctx.fillRect(cl.x + 14*s, cl.y, 6*s, 2*s);
       }
 
-      // ── Update ──
       function update() {
         frame++;
-
-        // Dino physics
         if (jumping) {
           velY += GRAVITY;
           dinoY += velY;
@@ -614,38 +654,28 @@
             jumping = false;
           }
         }
-
-        // Auto-jump: detect nearest cactus
         for (let c of cacti) {
           const cactusLeft = c.x;
           const dinoRight = DINO_X + DINO_DRAW_W * 0.6;
           const dist = cactusLeft - dinoRight;
-          if (dist > 0 && dist < 42 && !jumping) {
+          if (dist > 0 && dist < 42 * scale && !jumping) {
             jumping = true;
             velY = JUMP_VEL;
             break;
           }
         }
-
-        // Move cacti
         cacti.forEach(c => c.x -= speed);
         cacti = cacti.filter(c => c.x > -60);
-
-        // Spawn cacti
         cactusTimer += speed;
         if (cactusTimer >= nextCactus) {
           spawnCactus();
           cactusTimer = 0;
           nextCactus = CACTUS_MIN_GAP + Math.random() * (CACTUS_MAX_GAP - CACTUS_MIN_GAP);
         }
-
-        // Move ground bumps
         groundBumps.forEach(b => {
           b.x -= speed;
           if (b.x < -4) b.x = W + Math.random() * 30;
         });
-
-        // Move clouds (slower)
         clouds.forEach(cl => {
           cl.x -= speed * 0.2;
           if (cl.x < -40) {
@@ -655,91 +685,46 @@
         });
       }
 
-      // ── Draw ──
       function draw() {
         ctx.clearRect(0, 0, W, H);
-
-        // Clouds
         clouds.forEach(drawCloud);
-
-        // Ground line
         ctx.fillStyle = COL;
         ctx.fillRect(0, GROUND_Y, W, 1);
-
-        // Ground bumps / texture
         ctx.fillStyle = 'rgba(0, 0, 128, 0.25)';
-        groundBumps.forEach(b => {
-          ctx.fillRect(b.x, GROUND_Y + 1, b.w, b.h);
-        });
-
-        // Cacti
+        groundBumps.forEach(b => ctx.fillRect(b.x, GROUND_Y + 1, b.w, b.h));
         cacti.forEach(drawCactusGroup);
-
-        // Dino
         const runCycle = Math.floor(frame / 8) % 2;
-        let sprite;
-        if (jumping) {
-          sprite = dinoStand;
-        } else {
-          sprite = runCycle === 0 ? dinoRun1 : dinoRun2;
-        }
+        let sprite = jumping ? dinoStand : (runCycle === 0 ? dinoRun1 : dinoRun2);
         drawSprite(sprite, DINO_X, dinoY);
       }
 
+      function drawIdle() {
+        ctx.clearRect(0, 0, W, H);
+        clouds.forEach(drawCloud);
+        ctx.fillStyle = COL;
+        ctx.fillRect(0, GROUND_Y, W, 1);
+        ctx.fillStyle = 'rgba(0, 0, 128, 0.25)';
+        groundBumps.forEach(b => ctx.fillRect(b.x, GROUND_Y + 1, b.w, b.h));
+        drawSprite(dinoStand, DINO_X, GROUND_Y - DINO_DRAW_H);
+      }
+
+      let isIdle = false;
+
       function loop() {
-        update();
-        draw();
+        if (isIdle) {
+          drawIdle();
+        } else {
+          update();
+          draw();
+        }
         requestAnimationFrame(loop);
       }
 
-      // Start after a brief delay
-      setTimeout(() => {
-        spawnCactus();
-        loop();
-      }, 600);
+      setTimeout(() => { spawnCactus(); loop(); }, 600);
 
-      // ── Expose game state for scroll-driven nav ──
       window._dinoGame = {
-        setIdle(idle) {
-          this._idle = idle;
-        },
-        get idle() { return this._idle || false; },
-        _idle: false,
-        // Expose internals for nav mode
-        _speed: speed,
-        setSpeed(s) { speed = s; this._speed = s; },
-        getFrame() { return frame; }
-      };
-
-      // Override update to respect idle state
-      const _origUpdate = update;
-      update = function() {
-        if (window._dinoGame.idle) {
-          // Only draw standing dino, no physics
-          return;
-        }
-        _origUpdate();
-      };
-
-      // Override draw to show standing dino when idle
-      const _origDraw = draw;
-      draw = function() {
-        if (window._dinoGame.idle) {
-          ctx.clearRect(0, 0, W, H);
-          // Clouds still
-          clouds.forEach(drawCloud);
-          // Ground
-          ctx.fillStyle = COL;
-          ctx.fillRect(0, GROUND_Y, W, 1);
-          ctx.fillStyle = 'rgba(0, 0, 128, 0.25)';
-          groundBumps.forEach(b => {
-            ctx.fillRect(b.x, GROUND_Y + 1, b.w, b.h);
-          });
-          // Standing dino
-          drawSprite(dinoStand, DINO_X, GROUND_Y - DINO_DRAW_H);
-          return;
-        }
-        _origDraw();
+        setIdle(v) { isIdle = v; },
+        get idle() { return isIdle; }
       };
     })();
 
@@ -760,7 +745,7 @@
     });
     setTimeout(loadSVG, 7500);
 
-    // ── Game Nav: Section labels fly in from right when scrolled past hero ──
+    // ── Game Nav ──
     const gameNavContainer = document.getElementById('game-nav-labels');
     const hero = document.querySelector('.hero');
     const sections = Array.from(document.querySelectorAll('.content-section'));
@@ -768,7 +753,6 @@
     let currentIdx = -1;
     let navActive = false;
 
-    // Build nav links for one-at-a-time display
     sectionNames.forEach((name, i) => {
       const link = document.createElement('a');
       link.className = 'game-nav-link';
@@ -784,47 +768,33 @@
 
     function updateGameNav() {
       if (!hero || !gameNavContainer) return;
-
       const heroBottom = hero.offsetTop + hero.offsetHeight;
       const scrollY = window.scrollY;
-
       if (scrollY > heroBottom - 200) {
-        // Activate nav mode
         if (!navActive) {
           navActive = true;
           gameNavContainer.classList.add('visible');
           if (window._dinoGame) window._dinoGame.setIdle(true);
         }
-
-        // Find active section
         let activeIdx = 0;
         const viewMid = scrollY + window.innerHeight * 0.4;
         sections.forEach((sec, i) => {
-          const top = sec.offsetTop;
-          const bottom = top + sec.offsetHeight;
-          if (viewMid >= top && viewMid < bottom) activeIdx = i;
+          if (viewMid >= sec.offsetTop && viewMid < sec.offsetTop + sec.offsetHeight) activeIdx = i;
         });
-
         if (activeIdx !== currentIdx) {
           currentIdx = activeIdx;
           navLinks.forEach((link, i) => {
             link.classList.remove('active', 'past');
-            if (i < activeIdx) {
-              link.classList.add('past');
-            } else if (i === activeIdx) {
-              link.classList.add('active');
-            }
+            if (i < activeIdx) link.classList.add('past');
+            else if (i === activeIdx) link.classList.add('active');
           });
         }
       } else {
-        // Back in hero — resume game
         if (navActive) {
           navActive = false;
           gameNavContainer.classList.remove('visible');
           if (window._dinoGame) window._dinoGame.setIdle(false);
-          navLinks.forEach(link => {
-            link.classList.remove('active', 'past');
-          });
+          navLinks.forEach(link => link.classList.remove('active', 'past'));
           currentIdx = -1;
         }
       }
@@ -832,67 +802,61 @@
 
     window.addEventListener('scroll', updateGameNav, { passive: true });
     updateGameNav();
-    // ── Custom Cursor ──
-    const cursorEl = document.querySelector('.cursor');
-    const profileCircle = document.getElementById('profile-circle');
-    const cursorReveal = document.getElementById('cursor-reveal');
-    const BASE_CURSOR_SIZE = 80;
-    const BASE_RADIUS = BASE_CURSOR_SIZE / 2;  // 40px
-    const HOVER_SCALE = 1.8;
-    const HOVER_CURSOR_SIZE = BASE_CURSOR_SIZE * HOVER_SCALE; // 144px
-    const HOVER_RADIUS = BASE_RADIUS * HOVER_SCALE;           // 72px
-    let isOverPhoto = false;
 
-    if (cursorEl) {
-      document.addEventListener('mousemove', (e) => {
-        cursorEl.style.top = e.clientY + 'px';
-        cursorEl.style.left = e.clientX + 'px';
+    // ── Custom Cursor (desktop / mouse only) ──
+    if (!isTouchDevice) {
+      const cursorEl = document.querySelector('.cursor');
+      const profileCircle = document.getElementById('profile-circle');
+      const cursorReveal = document.getElementById('cursor-reveal');
+      const BASE_CURSOR_SIZE = 80;
+      const BASE_RADIUS = BASE_CURSOR_SIZE / 2;
+      const HOVER_SCALE = 1.8;
+      const HOVER_CURSOR_SIZE = BASE_CURSOR_SIZE * HOVER_SCALE;
+      const HOVER_RADIUS = BASE_RADIUS * HOVER_SCALE;
+      let isOverPhoto = false;
 
-        const isLink = e.target.closest('a, .hero-social, .game-nav-labels') !== null;
-        if (isLink) {
-          cursorEl.classList.add('link-hover');
-        } else {
-          cursorEl.classList.remove('link-hover');
-        }
+      if (cursorEl) {
+        document.addEventListener('mousemove', (e) => {
+          cursorEl.style.top = e.clientY + 'px';
+          cursorEl.style.left = e.clientX + 'px';
 
-        // ── Art.jpeg reveal inside cursor when over profile photo ──
-        if (profileCircle && cursorReveal) {
-          const rect = profileCircle.getBoundingClientRect();
-          const isNowOver =
-            e.clientX >= rect.left &&
-            e.clientX <= rect.right &&
-            e.clientY >= rect.top &&
-            e.clientY <= rect.bottom;
+          const isLink = e.target.closest('a, .hero-social, .game-nav-labels') !== null;
+          if (isLink) cursorEl.classList.add('link-hover');
+          else cursorEl.classList.remove('link-hover');
 
-          if (isNowOver) {
-            // Scale up cursor
-            if (!isOverPhoto) {
-              cursorEl.style.width = HOVER_CURSOR_SIZE + 'px';
-              cursorEl.style.height = HOVER_CURSOR_SIZE + 'px';
-              isOverPhoto = true;
+          if (profileCircle && cursorReveal) {
+            const rect = profileCircle.getBoundingClientRect();
+            const isNowOver =
+              e.clientX >= rect.left && e.clientX <= rect.right &&
+              e.clientY >= rect.top && e.clientY <= rect.bottom;
+
+            if (isNowOver) {
+              if (!isOverPhoto) {
+                cursorEl.style.width = HOVER_CURSOR_SIZE + 'px';
+                cursorEl.style.height = HOVER_CURSOR_SIZE + 'px';
+                isOverPhoto = true;
+              }
+              const localX = e.clientX - rect.left;
+              const localY = e.clientY - rect.top;
+              cursorReveal.style.clipPath = `circle(${HOVER_RADIUS}px at ${localX}px ${localY}px)`;
+              cursorReveal.style.opacity = '1';
+            } else {
+              if (isOverPhoto) {
+                cursorEl.style.width = BASE_CURSOR_SIZE + 'px';
+                cursorEl.style.height = BASE_CURSOR_SIZE + 'px';
+                isOverPhoto = false;
+              }
+              cursorReveal.style.opacity = '0';
+              cursorReveal.style.clipPath = 'circle(0px at 50% 50%)';
             }
-            // Mouse position relative to the profile circle element
-            const localX = e.clientX - rect.left;
-            const localY = e.clientY - rect.top;
-            cursorReveal.style.clipPath =
-              `circle(${HOVER_RADIUS}px at ${localX}px ${localY}px)`;
-            cursorReveal.style.opacity = '1';
-          } else {
-            if (isOverPhoto) {
-              cursorEl.style.width = BASE_CURSOR_SIZE + 'px';
-              cursorEl.style.height = BASE_CURSOR_SIZE + 'px';
-              isOverPhoto = false;
-            }
-            cursorReveal.style.opacity = '0';
-            cursorReveal.style.clipPath = 'circle(0px at 50% 50%)';
           }
-        }
-      });
+        });
 
-      document.addEventListener('click', () => {
-        cursorEl.classList.add('click');
-        setTimeout(() => cursorEl.classList.remove('click'), 300);
-      });
+        document.addEventListener('click', () => {
+          cursorEl.classList.add('click');
+          setTimeout(() => cursorEl.classList.remove('click'), 300);
+        });
+      }
     }
   </script>
 </body>
