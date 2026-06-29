@@ -182,7 +182,17 @@
       gap: 1.5rem;
       text-align: center;
     }
-    .hero { gap: 2rem; padding: 5rem 6vw 3rem; }
+    .hero {
+      gap: 2rem;
+      padding: 5rem 6vw 3rem;
+      min-height: auto;
+      padding-top: 6rem;
+    }
+    #svg-container {
+      height: clamp(3rem, 14vw, 6rem);
+      transform: translateY(clamp(0.8rem, 3vw, 1.5rem));
+    }
+    .hero-text { font-size: clamp(2rem, 9vw, 4rem); }
   }
 
   .hero-left {
@@ -495,11 +505,42 @@
   .sc-4 { z-index: 4; background: linear-gradient(180deg, #236aad 0%, #0d4a9e 100%); }
   
   @media (max-width: 768px) {
-    .stack-card { flex-direction: column; height: 85vh; padding: 4vw; }
-    .glass-panel, .card-image { width: 100%; height: 50%; }
-    .glass-panel { padding: 1.5rem; }
-    .glass-panel h2 { font-size: 2rem; margin-bottom: 1rem; }
-    .tags { margin-bottom: 1rem; }
+    .stack-card {
+      flex-direction: column;
+      height: 88vh;
+      top: 6vh;
+      left: 3vw;
+      right: 3vw;
+      padding: 4vw 4vw 3vw;
+      border-radius: 22px;
+      overflow: hidden;
+    }
+    .glass-panel {
+      width: 100%;
+      height: auto;
+      flex-shrink: 0;
+      padding: 1.2rem 1rem 0.8rem;
+      background: transparent;
+      border: none;
+      backdrop-filter: none;
+    }
+    .card-image {
+      width: 100%;
+      flex: 1;
+      min-height: 0;
+    }
+    .glass-panel h2 { font-size: 1.7rem; margin-bottom: 0.6rem; }
+    .card-header { margin-bottom: 0.8rem; font-size: 0.85rem; }
+    .tags { margin-bottom: 0.6rem; gap: 0.4rem; }
+    .tags span { font-size: 0.75rem; padding: 0.25rem 0.7rem; }
+    .glass-panel p { font-size: 0.88rem; line-height: 1.5; margin-bottom: 0; }
+    .card-btn { margin-top: 0.8rem; padding: 0.55rem 1rem; font-size: 0.85rem; }
+    .work-intro { text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .work-intro h2 { font-size: 1.6rem; }
+    .work-intro p { font-size: 0.88rem; padding: 0 1rem; }
   }
   /* ── Journey Section ── */
   #journey-section {
@@ -681,16 +722,22 @@
     color: #475569;
   }
   .jc-bullets li::before {
-    content: '•';
+    content: '\2022';
     position: absolute;
     left: 0;
     color: #94a3b8;
   }
 
   @media (max-width: 768px) {
-    #journey-track { padding: 0 calc(50vw - 160px); }
-    .journey-stop, .timeline-node::before { width: 320px; }
-    .journey-card { width: 280px; }
+    .journey-stop { width: 320px; }
+    .journey-card { width: 290px; height: auto; min-height: 340px; padding: 20px 18px; border-radius: 20px; }
+    .jc-header { gap: 10px; margin-bottom: 12px; }
+    .jc-title-wrap h3 { font-size: 0.95rem; }
+    .jc-title-wrap span { font-size: 0.8rem; }
+    .jc-location { font-size: 0.72rem; }
+    .jc-bullets li { font-size: 0.82rem; margin-bottom: 8px; }
+    .journey-intro h2 { font-size: 2.2rem; }
+    .journey-intro p { font-size: 0.9rem; }
   }
 
   /* ── Footer ── */
@@ -802,9 +849,347 @@
   }
 
   @media (max-width: 768px) {
-    .ff-content { flex-direction: column; align-items: flex-start; gap: 4rem; }
+    .final-footer { padding: 8vw; min-height: auto; }
+    .ff-content { flex-direction: column-reverse; align-items: flex-start; gap: 2.5rem; }
     .ff-left { max-width: 100%; }
-    .ff-left h1 { font-size: 3.5rem; }
-    .ff-profile { width: 80vw; transform: rotate(0); }
-    .ff-bottom { flex-direction: column; gap: 2rem; }
+    .ff-left h1 { font-size: clamp(2.4rem, 9vw, 3.5rem); margin-bottom: 3vh; }
+    .ff-profile { width: 60vw; transform: rotate(0); border-radius: 16px; }
+    .ff-bottom { flex-direction: column; gap: 1.5rem; margin-bottom: 4vh; }
+    .ff-email a { font-size: 1rem; }
+  }
+
+  /* ── Card Stats Grid ── */
+  .card-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    padding: 2rem;
+  }
+
+  .stat-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 1.5rem 1.5rem 1.2rem;
+  }
+
+  .stat-num {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.65);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── Card Achievements List ── */
+  .card-achievements-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding: 2rem;
+    width: 100%;
+  }
+
+  .ach-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 0.65rem 1rem;
+  }
+
+  .ach-medal {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 8px;
+    white-space: nowrap;
+  }
+  .ach-medal.gold { background: rgba(251,191,36,0.25); color: #fbbf24; }
+  .ach-medal.silver { background: rgba(203,213,225,0.2); color: #cbd5e1; }
+  .ach-medal.top { background: rgba(167,243,208,0.2); color: #6ee7b7; }
+  .ach-medal.grant { background: rgba(196,181,253,0.2); color: #c4b5fd; }
+
+  .ach-text {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.85);
+    flex: 1;
+  }
+  .ach-text em {
+    font-style: normal;
+    color: rgba(255,255,255,0.45);
+    margin-left: 6px;
+    font-size: 0.78rem;
+  }
+
+  /* ── Card Publication Blocks ── */
+  .card-pub-blocks {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    padding: 2rem;
+    width: 100%;
+  }
+
+  .pub-block {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 18px;
+    padding: 1.4rem 1.5rem;
+  }
+
+  .pub-venue {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .pub-title {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #ffffff;
+    line-height: 1.4;
+    margin: 0 0 0.5rem;
+  }
+
+  .pub-note {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.5);
+  }
+
+  @media (max-width: 768px) {
+    .card-stats-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 0.7rem;
+      padding: 1rem 0.5rem;
+    }
+    .stat-block { padding: 1rem 0.9rem; border-radius: 14px; }
+    .stat-num { font-size: 1.5rem; }
+    .stat-label { font-size: 0.7rem; }
+    .card-achievements-list { padding: 0.8rem 0.4rem; gap: 0.5rem; }
+    .ach-row { padding: 0.5rem 0.7rem; border-radius: 10px; }
+    .ach-medal { font-size: 0.68rem; padding: 3px 7px; }
+    .ach-text { font-size: 0.78rem; }
+    .card-pub-blocks { padding: 0.8rem 0.4rem; gap: 0.8rem; }
+    .pub-block { padding: 1rem 1rem; border-radius: 14px; }
+    .pub-title { font-size: 0.88rem; }
+  }
+
+  /* ── Skills Section ── */
+  .skills-section {
+    background: #ffffff;
+    padding: 10vh 8vw;
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .skills-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-eyebrow {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: #888;
+    text-transform: uppercase;
+    font-family: 'Inter', system-ui, sans-serif;
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+
+  .skills-header h2,
+  .projects-header h2 {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    color: #111;
+    margin-bottom: 4vh;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem 5vw;
+  }
+
+  @media (max-width: 640px) {
+    .skills-grid { grid-template-columns: 1fr; gap: 1.8rem; }
+    .skills-section, .projects-section { padding: 7vh 5vw; }
+    .skills-header h2, .projects-header h2 { font-size: 2rem; }
+  }
+
+  .skill-category {}
+
+  .skill-cat-label {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+
+  .skill-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .skill-chips span {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: #1e293b;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 0.4rem 0.85rem;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .skill-chips span:hover {
+    background: #e8ecf8;
+    border-color: rgba(0,0,128,0.2);
+  }
+
+  /* ── Projects Section ── */
+  .projects-section {
+    background: #fafafa;
+    padding: 10vh 8vw;
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .projects-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .projects-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+    .project-card { padding: 1.5rem 1.3rem 1.2rem; border-radius: 18px; }
+    .proj-title-row h3 { font-size: 1.2rem; }
+    .proj-desc { font-size: 0.88rem; }
+    .proj-stats span, .proj-tech span { font-size: 0.72rem; }
+  }
+
+  .project-card {
+    background: #ffffff;
+    border: 1px solid #e8ecf4;
+    border-radius: 24px;
+    padding: 2rem 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.5rem;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+
+  .project-card:hover {
+    box-shadow: 0 12px 40px rgba(0,0,128,0.07);
+    transform: translateY(-3px);
+  }
+
+  .proj-title-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .proj-title-row h3 {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #111;
+    margin: 0;
+  }
+
+  .proj-year {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.8rem;
+    color: #94a3b8;
+    white-space: nowrap;
+  }
+
+  .proj-desc {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #475569;
+    margin: 0;
+  }
+
+  .proj-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .proj-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .proj-stats span {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #000080;
+    background: rgba(0,0,128,0.06);
+    border: 1px solid rgba(0,0,128,0.12);
+    border-radius: 8px;
+    padding: 0.3rem 0.7rem;
+  }
+
+  .proj-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .proj-tech span {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.78rem;
+    color: #64748b;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 0.25rem 0.6rem;
   }
